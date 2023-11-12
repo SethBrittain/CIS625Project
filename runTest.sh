@@ -1,5 +1,7 @@
 #! /bin/bash
 
+mkdir outputs
+
 make all > /dev/null
 
 NUM_POINTS=$1
