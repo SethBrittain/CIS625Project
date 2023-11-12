@@ -1,10 +1,11 @@
 import numpy as np
+import sys
 
-x, y, z = np.loadtxt("testData.txt")
+x, y, z = np.loadtxt(sys.argv[1])
 
-rmax = 50
+rmax = int(sys.argv[2])
 
-N = np.size(x)
+N = int(sys.argv[3])
 counts = np.zeros((N,N,N))
 
 for i in range(N):
@@ -18,4 +19,9 @@ for i in range(N):
             else:
                 counts[int(d12)][int(d23)][int(d31)] += 1
 
+
+for i in range(N):
+	for j in range(N):
+		for k in range(N):
+			print(int(counts[i][j][k]), file=sys.stdout)
 # save the 3D array counts

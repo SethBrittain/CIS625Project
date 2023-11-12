@@ -1,8 +1,23 @@
 #!/bin/bash
-for i in {1..450}
+
+NUM_POINTS=$1
+MAX_COORD=$2
+
+for (( i=0 ; i<$NUM_POINTS ; i++ ))
 do
-	NUM1=$(($RANDOM % 20));
-	NUM2=$(($RANDOM % 20));
-	NUM3=$(($RANDOM % 20));
-	echo "$NUM1 $NUM2 $NUM3";
+	NUM1=$(($RANDOM % $MAX_COORD));
+	echo -n "$NUM1 ";
 done
+echo ""
+for (( i=0 ; i<$NUM_POINTS ; i++ ))
+do
+	NUM1=$(($RANDOM % $MAX_COORD));
+	echo -n "$NUM1 ";
+done
+echo ""
+for (( i=0 ; i<$NUM_POINTS ; i++ ))
+do
+	NUM1=$(($RANDOM % $MAX_COORD));
+	echo -n "$NUM1 ";
+done
+

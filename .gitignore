@@ -12,5 +12,7 @@ inputfile.dat
 # WIP
 CIS625Project.cpp
 
-# Compiled
+# Outputs
+timings/*
+outputs/*
 findTris

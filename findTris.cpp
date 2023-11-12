@@ -28,29 +28,36 @@ for i in range(N):
 #include <vector>
 #include <math.h>
 
+// argv[1] = input file
+// argv[2] = rmax
+// argv[3] = points
 int main(int argc, char** argv) {
-	int rmax = 50;
-	
-	std::vector<int> xV,yV,zV;
-
 	std::ifstream file(argv[1]);
+	int rmax = atoi(argv[2]);
+	int N = atoi(argv[3]);
+
+	std::vector<int> xV,yV,zV;
 	
 	if (file.is_open())
 	{
-		int i = 0;
 		int x,y,z;
-
-		while ((file) >> x >> y >> z)
+		for (int i=0; i<N; i++)
 		{
+			file >> x;
 			xV.push_back(x);
+		}
+		for (int i=0; i<N; i++)
+		{
+			file >> y;
 			yV.push_back(y);
+		}
+		for (int i=0; i<N; i++)
+		{
+			file >> z;
 			zV.push_back(z);
 		}
-
 		file.close();
 	}
-
-	int N = xV.size();
 
 	int*** counts = (int***)std::malloc(sizeof(int***)*N);
 	for (int i=0; i<N; i++)
@@ -80,16 +87,36 @@ int main(int argc, char** argv) {
 		int zjzk = (zV[j] - zV[k]);
 		int zkzi = (zV[k] - zV[i]);
 		
-		float d12 = std::sqrt(xixj*xixj + yiyj*yiyj + zizj*zizj);
-		float d23 = std::sqrt(yiyj*yiyj + yjyk*yjyk + zjzk*zjzk);
-		float d31 = std::sqrt(xkxi*xkxi + ykyi*ykyi + zkzi*zkzi);
+		float d12 = std::sqrt(
+			(xV[i] - xV[j])*(xV[i] - xV[j]) + 
+			(yV[i] - yV[j])*(yV[i] - yV[j]) + 
+			(zV[i] - zV[j])*(zV[i] - zV[j])
+		);
+		float d23 = std::sqrt(
+			(xV[j] - xV[k])*(xV[j] - xV[k]) + 
+			(yV[j] - yV[k])*(yV[j] - yV[k]) + 
+			(zV[j] - zV[k])*(zV[j] - zV[k])
+		);
+		float d31 = std::sqrt(
+			(xV[k] - xV[i])*(xV[k] - xV[i]) + 
+			(yV[k] - yV[i])*(yV[k] - yV[i]) + 
+			(zV[k] - zV[i])*(zV[k] - zV[i])
+		);
 
-		if (d12 > rmax or d23 > rmax or d31 > rmax) continue;
-		else
-		{
-			std::cout << d12 << " " << d23 << " " << d31 << std::endl;
+		if (d12 > rmax || d23 > rmax || d31 > rmax) continue;
+		else {
 			counts[int(d12)][int(d23)][int(d31)] += 1;
 		}
+	}
+
+	for (int i=0; i<N; i++)
+	for (int j=0; j<N; j++)
+	for (int k=0; k<N; k++)
+	try {
+		std::cout << counts[i][j][k] << std::endl;		
+	} catch (std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+		return 1;
 	}
 
 	return 0;
