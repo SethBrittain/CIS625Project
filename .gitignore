@@ -1,0 +1,16 @@
+# Project directories
+.vscode
+.pro
+
+# Test files
+error.log
+output.log
+
+# Input data
+inputfile.dat
+
+# WIP
+CIS625Project.cpp
+
+# Compiled
+findTris
